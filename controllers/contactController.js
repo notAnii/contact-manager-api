@@ -1,6 +1,6 @@
 const asyncHandler = require('express-async-handler');
 const Contact = require('../models/Contact');
-const CustomError = require('../utils/customError');
+const CustomError = require('../utils/CustomError');
 
 //@desc Get all contacts
 //@route GET /api/contacts
