@@ -1,45 +1,9 @@
-const errorHandler = (err, req, res, next) => {
-    const statusCode = res.statusCode ? res.statusCode : 500;
-    switch(statusCode){
-        case 400:
-            res.json({
-                title: "Validation Failed",
-                message: err.message,
-                stackTrace: err.stack
-            });
-            break;
-        case 404:
-            res.json({
-                title: "Not found",
-                message: err.message,
-                stackTrace: err.stack
-            });
-            break;
-        case 401:
-            res.json({
-                title: "Unauthorized",
-                message: err.message,
-                stackTrace: err.stack
-            });
-            break;
-        case 403:
-            res.json({
-                title: "Forbidden",
-                message: err.message,
-                stackTrace: err.stack
-            });
-            break;
-        case 500:
-            res.json({
-                title: "Server Error",
-                message: err.message,
-                stackTrace: err.stack
-            });
-            break;
-        default:
-            console.log("No error")
-            break;
-    }
+const errorMiddleware = (err, req, res, next) => {
+    const status = err.status ? err.status : 500;
+    const message = status === 500 ? "An unexpected error occurred" : err.message;
+    const errors = err.error;
+    res.status(status).send({ message, error: errors });
+    console.log(err.stack);
 };
 
-module.exports = errorHandler;
+module.exports = errorMiddleware;
